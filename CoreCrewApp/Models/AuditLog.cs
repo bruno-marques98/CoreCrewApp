@@ -23,7 +23,7 @@ namespace CoreCrewApp.Models
 
         [Required]
         public DateTime Timestamp { get; set; }
-
+        [Required]
         [StringLength(1000)]
         public string Details { get; set; } // Additional details about the action
     }

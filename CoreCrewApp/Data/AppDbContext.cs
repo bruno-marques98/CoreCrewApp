@@ -17,6 +17,7 @@ namespace CoreCrewApp.Data
         public DbSet<Benefit> Benefits { get; set; }
         public DbSet<EmployeeBenefit> EmployeeBenefits { get; set; }
         public DbSet<Project> Projects { get; set; }
+        public DbSet<Attendance> Attendences { get; set; }
         public DbSet<EmployeeProject> EmployeeProjects { get; set; }
         public DbSet<TrainingProgram> TrainingPrograms { get; set; }
         public DbSet<EmployeeTraining> EmployeeTrainings { get; set; }
@@ -129,6 +130,37 @@ namespace CoreCrewApp.Data
                 .HasForeignKey(et => et.TrainingProgramID)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            // Attendance Configuration
+            modelBuilder.Entity<Attendance>(entity =>
+            {
+                // Setting up the primary key
+                entity.HasKey(a => a.AttendanceId);
+
+                // Configuring the relationship between Attendance and Employee
+                entity.HasOne(a => a.Employee)
+                      .WithMany(e => e.Attendances)
+                      .HasForeignKey("EmployeeId")
+                      .OnDelete(DeleteBehavior.Restrict); // Or use Cascade, depending on your business rules
+
+                // Configuring the AttendanceStatus enum
+                entity.Property(a => a.AttendanceStatus)
+                      .IsRequired()
+                      .HasConversion<int>(); // This will store the enum as an integer in the database
+
+                // Configuring other properties
+                entity.Property(a => a.CheckInTime)
+                      .IsRequired();
+
+                entity.Property(a => a.CheckOutTime)
+                      .IsRequired();
+
+                entity.Property(a => a.CreatedAt)
+                      .IsRequired();
+
+                entity.Property(a => a.UpdatedAt)
+                      .IsRequired();
+            });
+
             // Configure Notification entity
             modelBuilder.Entity<Notification>()
                 .HasOne(n => n.Employee)
@@ -136,6 +168,86 @@ namespace CoreCrewApp.Data
                 .HasForeignKey(n => n.EmployeeID)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            #region Seed Data
+            // Seed Departments
+            modelBuilder.Entity<Department>().HasData(
+                new Department { DepartmentId = 1, DepartmentName = "Human Resources" },
+                new Department { DepartmentId = 2, DepartmentName = "IT" },
+                new Department { DepartmentId = 3, DepartmentName = "Marketing" }
+            );
+            // Seed Roles
+            modelBuilder.Entity<Role>().HasData(
+                new Role { RoleID = 1, RoleName = "Manager" },
+                new Role { RoleID = 2, RoleName = "Developer" },
+                new Role { RoleID = 3, RoleName = "Designer" }
+            );
+
+            // Seed Employees
+            modelBuilder.Entity<Employee>().HasData(
+                new Employee { EmployeeID = 1, DepartmentID = 1, FirstName = "John", LastName = "Doe", Email = "test@test.com", HireDate = new DateTime(1985, 1, 1) },
+                new Employee { EmployeeID = 2, DepartmentID = 1, FirstName = "Jane", LastName = "Smith", Email = "test@test.com", HireDate = new DateTime(1990, 2, 15) }
+            );
+
+            // Seed Benefits
+            modelBuilder.Entity<Benefit>().HasData(
+                new Benefit { BenefitID = 1, Name = "Health Insurance", Description = "Basic health insurance", Cost = 200 },
+                new Benefit { BenefitID = 2, Name = "Retirement Plan", Description = "Company matching retirement plan", Cost = 150 }
+            );
+
+            // Seed Projects
+            modelBuilder.Entity<Project>().HasData(
+                new Project { ProjectID = 1, ProjectName = "Project Alpha", Description = "First project", StartDate = new DateTime(2024, 1, 1), EndDate = new DateTime(2024, 6, 30), ManagerID = 1 },
+                new Project { ProjectID = 2, ProjectName = "Project Beta", Description = "Second project", StartDate = new DateTime(2024, 2, 1), EndDate = new DateTime(2024, 7, 31), ManagerID = 2 }
+            );
+
+            // Seed TrainingPrograms
+            modelBuilder.Entity<TrainingProgram>().HasData(
+                new TrainingProgram { TrainingProgramID = 1, ProgramName = "Leadership Training", Description = "Develop leadership skills", TrainerID = 1 },
+                new TrainingProgram { TrainingProgramID = 2, ProgramName = "Software Development", Description = "Advanced software development techniques", TrainerID = 2 }
+            );
+
+            // Seed EmployeeBenefits
+            modelBuilder.Entity<EmployeeBenefit>().HasData(
+                new EmployeeBenefit { EmployeeID = 1, BenefitID = 1, EnrollmentDate = DateTime.Now },
+                new EmployeeBenefit { EmployeeID = 2, BenefitID = 2, EnrollmentDate = DateTime.Now }
+            );
+
+            // Seed EmployeeTrainings
+            modelBuilder.Entity<EmployeeTraining>().HasData(
+                new EmployeeTraining { EmployeeID = 1, TrainingProgramID = 1 },
+                new EmployeeTraining { EmployeeID = 2, TrainingProgramID = 2 }
+            );
+
+            // Seed EmployeeRoles
+            modelBuilder.Entity<EmployeeRole>().HasData(
+                new EmployeeRole { EmployeeID = 1, RoleID = 1 },
+                new EmployeeRole { EmployeeID = 2, RoleID = 2 }
+            );
+
+            // Seed EmployeeProjects
+            modelBuilder.Entity<EmployeeProject>().HasData(
+                new EmployeeProject { EmployeeID = 1, ProjectID = 1 },
+                new EmployeeProject { EmployeeID = 2, ProjectID = 2 }
+            );
+
+            // Seed Notifications
+            modelBuilder.Entity<Notification>().HasData(
+                new Notification { NotificationID = 1, EmployeeID = 1, Title = "Welcome", Message = "Welcome to the company!" },
+                new Notification { NotificationID = 2, EmployeeID = 2, Title = "Benefits", Message = "Please review your benefits options." }
+            );
+
+            // Seed AuditLogs
+            modelBuilder.Entity<AuditLog>().HasData(
+                new AuditLog { AuditLogID = 1, Action = "Created", TableName = "Employee", UserName = "Bruno Marquês", Timestamp = DateTime.Now, Details = "Initial setup of the application." },
+                new AuditLog { AuditLogID = 2, Action = "Updated", TableName = "Employee", UserName = "Bruno Marquês", Timestamp = DateTime.Now, Details = "Updated employee records." }
+            );
+
+            // Seed Settings
+            modelBuilder.Entity<Setting>().HasData(
+                new Setting { SettingID = 1, Name = "AppName", Value = "Employee Management System", Type = "Naming", Description = "Application Naming" },
+                new Setting { SettingID = 2, Name = "Version", Value = "1.0.0", Type = "Version", Description = "Version Number" }
+            );
+            #endregion
             // Ensure the configuration of all entities
             base.OnModelCreating(modelBuilder);
         }

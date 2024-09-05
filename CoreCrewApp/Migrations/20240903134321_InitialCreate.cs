@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace CoreCrewApp.Migrations
 {
     /// <inheritdoc />
@@ -378,6 +380,125 @@ namespace CoreCrewApp.Migrations
                         principalTable: "TrainingPrograms",
                         principalColumn: "TrainingProgramID",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.InsertData(
+                table: "AuditLogs",
+                columns: new[] { "AuditLogID", "Action", "Details", "RecordID", "TableName", "Timestamp", "UserName" },
+                values: new object[,]
+                {
+                    { 1, "Created", "Initial setup of the application.", null, "Employee", new DateTime(2024, 9, 3, 14, 43, 20, 967, DateTimeKind.Local).AddTicks(7078), "Bruno Marquês" },
+                    { 2, "Updated", "Updated employee records.", null, "Employee", new DateTime(2024, 9, 3, 14, 43, 20, 967, DateTimeKind.Local).AddTicks(7081), "Bruno Marquês" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Benefits",
+                columns: new[] { "BenefitID", "Cost", "Description", "EmployeeID", "Name" },
+                values: new object[,]
+                {
+                    { 1, 200m, "Basic health insurance", null, "Health Insurance" },
+                    { 2, 150m, "Company matching retirement plan", null, "Retirement Plan" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Departments",
+                columns: new[] { "DepartmentId", "DepartmentName" },
+                values: new object[,]
+                {
+                    { 1, "Human Resources" },
+                    { 2, "IT" },
+                    { 3, "Marketing" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Roles",
+                columns: new[] { "RoleID", "RoleName" },
+                values: new object[,]
+                {
+                    { 1, "Manager" },
+                    { 2, "Developer" },
+                    { 3, "Designer" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Settings",
+                columns: new[] { "SettingID", "Description", "Name", "Type", "Value" },
+                values: new object[,]
+                {
+                    { 1, "Application Naming", "AppName", "Naming", "Employee Management System" },
+                    { 2, "Version Number", "Version", "Version", "1.0.0" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Employees",
+                columns: new[] { "EmployeeID", "DepartmentID", "Email", "FirstName", "HireDate", "LastName" },
+                values: new object[,]
+                {
+                    { 1, 1, "test@test.com", "John", new DateTime(1985, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Doe" },
+                    { 2, 1, "test@test.com", "Jane", new DateTime(1990, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "Smith" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "EmployeeBenefits",
+                columns: new[] { "BenefitID", "EmployeeID", "EnrollmentDate" },
+                values: new object[,]
+                {
+                    { 1, 1, new DateTime(2024, 9, 3, 14, 43, 20, 967, DateTimeKind.Local).AddTicks(6947) },
+                    { 2, 2, new DateTime(2024, 9, 3, 14, 43, 20, 967, DateTimeKind.Local).AddTicks(6994) }
+                });
+
+            migrationBuilder.InsertData(
+                table: "EmployeeRoles",
+                columns: new[] { "EmployeeID", "RoleID" },
+                values: new object[,]
+                {
+                    { 1, 1 },
+                    { 2, 2 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Notifications",
+                columns: new[] { "NotificationID", "EmployeeID", "IsRead", "Message", "Timestamp", "Title" },
+                values: new object[,]
+                {
+                    { 1, 1, false, "Welcome to the company!", new DateTime(2024, 9, 3, 13, 43, 20, 967, DateTimeKind.Utc).AddTicks(7058), "Welcome" },
+                    { 2, 2, false, "Please review your benefits options.", new DateTime(2024, 9, 3, 13, 43, 20, 967, DateTimeKind.Utc).AddTicks(7059), "Benefits" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Projects",
+                columns: new[] { "ProjectID", "Description", "EndDate", "ManagerID", "ProjectName", "StartDate" },
+                values: new object[,]
+                {
+                    { 1, "First project", new DateTime(2024, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "Project Alpha", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 2, "Second project", new DateTime(2024, 7, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "Project Beta", new DateTime(2024, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) }
+                });
+
+            migrationBuilder.InsertData(
+                table: "TrainingPrograms",
+                columns: new[] { "TrainingProgramID", "Description", "EndDate", "ProgramName", "StartDate", "TrainerID" },
+                values: new object[,]
+                {
+                    { 1, "Develop leadership skills", null, "Leadership Training", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 },
+                    { 2, "Advanced software development techniques", null, "Software Development", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 2 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "EmployeeProjects",
+                columns: new[] { "EmployeeID", "ProjectID", "AssignmentDate", "EmployeeProjectID" },
+                values: new object[,]
+                {
+                    { 1, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0 },
+                    { 2, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "EmployeeTrainings",
+                columns: new[] { "EmployeeID", "TrainingProgramID", "CompletionDate", "EmployeeTrainingID", "EnrollmentDate" },
+                values: new object[,]
+                {
+                    { 1, 1, null, 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 2, 2, null, 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) }
                 });
 
             migrationBuilder.CreateIndex(

@@ -39,6 +39,7 @@ namespace CoreCrewApp.Models
         public ICollection<EmployeeTraining> EmployeeTrainings { get; set; }
 
         public ICollection<Notification> Notifications { get; set; }
+        public ICollection<Attendance> Attendances { get; set; }
 
     }
 }

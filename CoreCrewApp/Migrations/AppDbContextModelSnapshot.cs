@@ -59,6 +59,26 @@ namespace CoreCrewApp.Migrations
                     b.HasKey("AuditLogID");
 
                     b.ToTable("AuditLogs");
+
+                    b.HasData(
+                        new
+                        {
+                            AuditLogID = 1,
+                            Action = "Created",
+                            Details = "Initial setup of the application.",
+                            TableName = "Employee",
+                            Timestamp = new DateTime(2024, 9, 3, 14, 43, 20, 967, DateTimeKind.Local).AddTicks(7078),
+                            UserName = "Bruno Marquês"
+                        },
+                        new
+                        {
+                            AuditLogID = 2,
+                            Action = "Updated",
+                            Details = "Updated employee records.",
+                            TableName = "Employee",
+                            Timestamp = new DateTime(2024, 9, 3, 14, 43, 20, 967, DateTimeKind.Local).AddTicks(7081),
+                            UserName = "Bruno Marquês"
+                        });
                 });
 
             modelBuilder.Entity("CoreCrewApp.Models.Benefit", b =>
@@ -89,6 +109,22 @@ namespace CoreCrewApp.Migrations
                     b.HasIndex("EmployeeID");
 
                     b.ToTable("Benefits");
+
+                    b.HasData(
+                        new
+                        {
+                            BenefitID = 1,
+                            Cost = 200m,
+                            Description = "Basic health insurance",
+                            Name = "Health Insurance"
+                        },
+                        new
+                        {
+                            BenefitID = 2,
+                            Cost = 150m,
+                            Description = "Company matching retirement plan",
+                            Name = "Retirement Plan"
+                        });
                 });
 
             modelBuilder.Entity("CoreCrewApp.Models.Department", b =>
@@ -107,6 +143,23 @@ namespace CoreCrewApp.Migrations
                     b.HasKey("DepartmentId");
 
                     b.ToTable("Departments");
+
+                    b.HasData(
+                        new
+                        {
+                            DepartmentId = 1,
+                            DepartmentName = "Human Resources"
+                        },
+                        new
+                        {
+                            DepartmentId = 2,
+                            DepartmentName = "IT"
+                        },
+                        new
+                        {
+                            DepartmentId = 3,
+                            DepartmentName = "Marketing"
+                        });
                 });
 
             modelBuilder.Entity("CoreCrewApp.Models.Employee", b =>
@@ -143,6 +196,26 @@ namespace CoreCrewApp.Migrations
                     b.HasIndex("DepartmentID");
 
                     b.ToTable("Employees");
+
+                    b.HasData(
+                        new
+                        {
+                            EmployeeID = 1,
+                            DepartmentID = 1,
+                            Email = "test@test.com",
+                            FirstName = "John",
+                            HireDate = new DateTime(1985, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastName = "Doe"
+                        },
+                        new
+                        {
+                            EmployeeID = 2,
+                            DepartmentID = 1,
+                            Email = "test@test.com",
+                            FirstName = "Jane",
+                            HireDate = new DateTime(1990, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastName = "Smith"
+                        });
                 });
 
             modelBuilder.Entity("CoreCrewApp.Models.EmployeeBenefit", b =>
@@ -161,6 +234,20 @@ namespace CoreCrewApp.Migrations
                     b.HasIndex("BenefitID");
 
                     b.ToTable("EmployeeBenefits");
+
+                    b.HasData(
+                        new
+                        {
+                            EmployeeID = 1,
+                            BenefitID = 1,
+                            EnrollmentDate = new DateTime(2024, 9, 3, 14, 43, 20, 967, DateTimeKind.Local).AddTicks(6947)
+                        },
+                        new
+                        {
+                            EmployeeID = 2,
+                            BenefitID = 2,
+                            EnrollmentDate = new DateTime(2024, 9, 3, 14, 43, 20, 967, DateTimeKind.Local).AddTicks(6994)
+                        });
                 });
 
             modelBuilder.Entity("CoreCrewApp.Models.EmployeeProject", b =>
@@ -182,6 +269,22 @@ namespace CoreCrewApp.Migrations
                     b.HasIndex("ProjectID");
 
                     b.ToTable("EmployeeProjects");
+
+                    b.HasData(
+                        new
+                        {
+                            EmployeeID = 1,
+                            ProjectID = 1,
+                            AssignmentDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EmployeeProjectID = 0
+                        },
+                        new
+                        {
+                            EmployeeID = 2,
+                            ProjectID = 2,
+                            AssignmentDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EmployeeProjectID = 0
+                        });
                 });
 
             modelBuilder.Entity("CoreCrewApp.Models.EmployeeRole", b =>
@@ -197,6 +300,18 @@ namespace CoreCrewApp.Migrations
                     b.HasIndex("RoleID");
 
                     b.ToTable("EmployeeRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            EmployeeID = 1,
+                            RoleID = 1
+                        },
+                        new
+                        {
+                            EmployeeID = 2,
+                            RoleID = 2
+                        });
                 });
 
             modelBuilder.Entity("CoreCrewApp.Models.EmployeeTraining", b =>
@@ -221,6 +336,22 @@ namespace CoreCrewApp.Migrations
                     b.HasIndex("TrainingProgramID");
 
                     b.ToTable("EmployeeTrainings");
+
+                    b.HasData(
+                        new
+                        {
+                            EmployeeID = 1,
+                            TrainingProgramID = 1,
+                            EmployeeTrainingID = 0,
+                            EnrollmentDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            EmployeeID = 2,
+                            TrainingProgramID = 2,
+                            EmployeeTrainingID = 0,
+                            EnrollmentDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("CoreCrewApp.Models.EmployeeTrainingProgram", b =>
@@ -313,6 +444,26 @@ namespace CoreCrewApp.Migrations
                     b.HasIndex("EmployeeID");
 
                     b.ToTable("Notifications");
+
+                    b.HasData(
+                        new
+                        {
+                            NotificationID = 1,
+                            EmployeeID = 1,
+                            IsRead = false,
+                            Message = "Welcome to the company!",
+                            Timestamp = new DateTime(2024, 9, 3, 13, 43, 20, 967, DateTimeKind.Utc).AddTicks(7058),
+                            Title = "Welcome"
+                        },
+                        new
+                        {
+                            NotificationID = 2,
+                            EmployeeID = 2,
+                            IsRead = false,
+                            Message = "Please review your benefits options.",
+                            Timestamp = new DateTime(2024, 9, 3, 13, 43, 20, 967, DateTimeKind.Utc).AddTicks(7059),
+                            Title = "Benefits"
+                        });
                 });
 
             modelBuilder.Entity("CoreCrewApp.Models.PerformanceReview", b =>
@@ -376,6 +527,26 @@ namespace CoreCrewApp.Migrations
                     b.HasIndex("ManagerID");
 
                     b.ToTable("Projects");
+
+                    b.HasData(
+                        new
+                        {
+                            ProjectID = 1,
+                            Description = "First project",
+                            EndDate = new DateTime(2024, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ManagerID = 1,
+                            ProjectName = "Project Alpha",
+                            StartDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            ProjectID = 2,
+                            Description = "Second project",
+                            EndDate = new DateTime(2024, 7, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ManagerID = 2,
+                            ProjectName = "Project Beta",
+                            StartDate = new DateTime(2024, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("CoreCrewApp.Models.Role", b =>
@@ -394,6 +565,23 @@ namespace CoreCrewApp.Migrations
                     b.HasKey("RoleID");
 
                     b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            RoleID = 1,
+                            RoleName = "Manager"
+                        },
+                        new
+                        {
+                            RoleID = 2,
+                            RoleName = "Developer"
+                        },
+                        new
+                        {
+                            RoleID = 3,
+                            RoleName = "Designer"
+                        });
                 });
 
             modelBuilder.Entity("CoreCrewApp.Models.Salary", b =>
@@ -454,6 +642,24 @@ namespace CoreCrewApp.Migrations
                     b.HasKey("SettingID");
 
                     b.ToTable("Settings");
+
+                    b.HasData(
+                        new
+                        {
+                            SettingID = 1,
+                            Description = "Application Naming",
+                            Name = "AppName",
+                            Type = "Naming",
+                            Value = "Employee Management System"
+                        },
+                        new
+                        {
+                            SettingID = 2,
+                            Description = "Version Number",
+                            Name = "Version",
+                            Type = "Version",
+                            Value = "1.0.0"
+                        });
                 });
 
             modelBuilder.Entity("CoreCrewApp.Models.TrainingProgram", b =>
@@ -488,6 +694,24 @@ namespace CoreCrewApp.Migrations
                     b.HasIndex("TrainerID");
 
                     b.ToTable("TrainingPrograms");
+
+                    b.HasData(
+                        new
+                        {
+                            TrainingProgramID = 1,
+                            Description = "Develop leadership skills",
+                            ProgramName = "Leadership Training",
+                            StartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TrainerID = 1
+                        },
+                        new
+                        {
+                            TrainingProgramID = 2,
+                            Description = "Advanced software development techniques",
+                            ProgramName = "Software Development",
+                            StartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TrainerID = 2
+                        });
                 });
 
             modelBuilder.Entity("CoreCrewApp.Models.Benefit", b =>
