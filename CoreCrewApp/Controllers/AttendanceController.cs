@@ -18,7 +18,7 @@ namespace CoreCrewApp.Controllers
         // GET: Attendance
         public async Task<IActionResult> Index()
         {
-            var attendances = await _context.Attendances.Include(a => a.Employee).ToListAsync(); // Corrected here
+            var attendances = await _context.Attendances.Include(a => a.Employee).ToListAsync();
             return View(attendances);
         }
 
@@ -52,7 +52,7 @@ namespace CoreCrewApp.Controllers
         // POST: Attendance/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AttendanceID,EmployeeID,Date,Status")] Attendance attendance)
+        public async Task<IActionResult> Create([Bind("AttendanceId,Employee,AttendanceStatus,CheckInTime,CheckOutTime,CreatedAt,UpdatedAt")] Attendance attendance)
         {
             if (ModelState.IsValid)
             {
@@ -60,7 +60,7 @@ namespace CoreCrewApp.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EmployeeID"] = new SelectList(_context.Employees, "EmployeeID", "FullName", attendance.Employee.EmployeeID);
+            ViewData["EmployeeID"] = new SelectList(_context.Employees, "EmployeeID", "FullName", attendance.Employee?.EmployeeID);
             return View(attendance);
         }
 
@@ -77,14 +77,14 @@ namespace CoreCrewApp.Controllers
             {
                 return NotFound();
             }
-            ViewData["EmployeeID"] = new SelectList(_context.Employees, "EmployeeID", "FullName", attendance.Employee.EmployeeID);
+            ViewData["EmployeeID"] = new SelectList(_context.Employees, "EmployeeID", "FullName", attendance.Employee?.EmployeeID);
             return View(attendance);
         }
 
         // POST: Attendance/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AttendanceID,EmployeeID,Date,Status")] Attendance attendance)
+        public async Task<IActionResult> Edit(int id, [Bind("AttendanceId,Employee,AttendanceStatus,CheckInTime,CheckOutTime,CreatedAt,UpdatedAt")] Attendance attendance)
         {
             if (id != attendance.AttendanceId)
             {
@@ -111,7 +111,7 @@ namespace CoreCrewApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EmployeeID"] = new SelectList(_context.Employees, "EmployeeID", "FullName", attendance.Employee.EmployeeID);
+            ViewData["EmployeeID"] = new SelectList(_context.Employees, "EmployeeID", "FullName", attendance.Employee?.EmployeeID);
             return View(attendance);
         }
 

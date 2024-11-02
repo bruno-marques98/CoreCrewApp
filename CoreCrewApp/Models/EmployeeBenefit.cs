@@ -1,14 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CoreCrewApp.Models
 {
+    [PrimaryKey(nameof(EmployeeID),nameof(BenefitID))]
     public class EmployeeBenefit
     {
-        [Key]
         public int EmployeeID { get; set; }
         public Employee Employee { get; set; }
-
-        [Key]
         public int BenefitID { get; set; }
         public Benefit Benefit { get; set; }
 

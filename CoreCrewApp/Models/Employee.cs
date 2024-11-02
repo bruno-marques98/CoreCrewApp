@@ -5,6 +5,22 @@ namespace CoreCrewApp.Models
 {
     public class Employee
     {
+        public Employee()
+        {
+            EmployeeRoles = new HashSet<EmployeeRole>();
+            LeaveRequests = new HashSet<LeaveRequest>();
+            PerformanceReviews = new HashSet<PerformanceReview>();
+            Salaries = new HashSet<Salary>();
+            Benefits = new HashSet<Benefit>();
+            EmployeeBenefits = new HashSet<EmployeeBenefit>();
+            ManagedProjects = new HashSet<Project>();
+            EmployeeProjects = new HashSet<EmployeeProject>();
+            TrainingPrograms = new HashSet<TrainingProgram>();
+            EmployeeTrainings = new HashSet<EmployeeTraining>();
+            Notifications = new HashSet<Notification>();
+            Attendances = new HashSet<Attendance>();
+        }
+
         [Key]
         public int EmployeeID { get; set; }
 
