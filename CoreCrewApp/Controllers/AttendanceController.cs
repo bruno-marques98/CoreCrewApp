@@ -18,7 +18,7 @@ namespace CoreCrewApp.Controllers
         // GET: Attendance
         public async Task<IActionResult> Index()
         {
-            var attendances = await _context.Attendences.Include(a => a.Employee).ToListAsync();
+            var attendances = await _context.Attendances.Include(a => a.Employee).ToListAsync(); // Corrected here
             return View(attendances);
         }
 
@@ -32,7 +32,7 @@ namespace CoreCrewApp.Controllers
 
             var attendance = await _context.Attendances
                 .Include(a => a.Employee)
-                .FirstOrDefaultAsync(m => m.AttendanceID == id);
+                .FirstOrDefaultAsync(m => m.AttendanceId == id);
 
             if (attendance == null)
             {
@@ -60,7 +60,7 @@ namespace CoreCrewApp.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EmployeeID"] = new SelectList(_context.Employees, "EmployeeID", "FullName", attendance.EmployeeID);
+            ViewData["EmployeeID"] = new SelectList(_context.Employees, "EmployeeID", "FullName", attendance.Employee.EmployeeID);
             return View(attendance);
         }
 
@@ -77,7 +77,7 @@ namespace CoreCrewApp.Controllers
             {
                 return NotFound();
             }
-            ViewData["EmployeeID"] = new SelectList(_context.Employees, "EmployeeID", "FullName", attendance.EmployeeID);
+            ViewData["EmployeeID"] = new SelectList(_context.Employees, "EmployeeID", "FullName", attendance.Employee.EmployeeID);
             return View(attendance);
         }
 
@@ -86,7 +86,7 @@ namespace CoreCrewApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("AttendanceID,EmployeeID,Date,Status")] Attendance attendance)
         {
-            if (id != attendance.AttendanceID)
+            if (id != attendance.AttendanceId)
             {
                 return NotFound();
             }
@@ -100,7 +100,7 @@ namespace CoreCrewApp.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AttendanceExists(attendance.AttendanceID))
+                    if (!AttendanceExists(attendance.AttendanceId))
                     {
                         return NotFound();
                     }
@@ -111,7 +111,7 @@ namespace CoreCrewApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EmployeeID"] = new SelectList(_context.Employees, "EmployeeID", "FullName", attendance.EmployeeID);
+            ViewData["EmployeeID"] = new SelectList(_context.Employees, "EmployeeID", "FullName", attendance.Employee.EmployeeID);
             return View(attendance);
         }
 
@@ -125,7 +125,7 @@ namespace CoreCrewApp.Controllers
 
             var attendance = await _context.Attendances
                 .Include(a => a.Employee)
-                .FirstOrDefaultAsync(m => m.AttendanceID == id);
+                .FirstOrDefaultAsync(m => m.AttendanceId == id);
 
             if (attendance == null)
             {
@@ -148,7 +148,7 @@ namespace CoreCrewApp.Controllers
 
         private bool AttendanceExists(int id)
         {
-            return _context.Attendances.Any(a => a.AttendanceID == id);
+            return _context.Attendances.Any(a => a.AttendanceId == id);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace CoreCrewApp.Data
         public DbSet<Benefit> Benefits { get; set; }
         public DbSet<EmployeeBenefit> EmployeeBenefits { get; set; }
         public DbSet<Project> Projects { get; set; }
-        public DbSet<Attendance> Attendences { get; set; }
+        public DbSet<Attendance> Attendances { get; set; }
         public DbSet<EmployeeProject> EmployeeProjects { get; set; }
         public DbSet<TrainingProgram> TrainingPrograms { get; set; }
         public DbSet<EmployeeTraining> EmployeeTrainings { get; set; }

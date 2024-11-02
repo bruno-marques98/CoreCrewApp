@@ -1,0 +1,37 @@
+﻿@model IEnumerable<CoreCrewApp.Models.EmployeeTraining>
+
+@{
+    ViewData["Title"] = "Employee Trainings";
+}
+
+<h2>Employee Trainings</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Employee</th>
+            <th>Training Program</th>
+            <th>Enrollment Date</th>
+            <th>Completion Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Employee.FirstName @item.Employee.LastName</td>
+                <td>@item.TrainingProgram.ProgramName</td>
+                <td>@item.EnrollmentDate.ToShortDateString()</td>
+                <td>@item.CompletionDate?.ToShortDateString()</td>
+                <td>
+                    <a href="@Url.Action("Details", new { employeeId = item.EmployeeID, trainingProgramId = item.TrainingProgramID })" class="btn btn-info">Details</a> |
+                    <a href="@Url.Action("Edit", new { employeeId = item.EmployeeID, trainingProgramId = item.TrainingProgramID })" class="btn btn-primary">Edit</a> |
+                    <a href="@Url.Action("Delete", new { employeeId = item.EmployeeID, trainingProgramId = item.TrainingProgramID })" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a href="@Url.Action("Create")" class="btn btn-success">Add New Training Assignment</a>

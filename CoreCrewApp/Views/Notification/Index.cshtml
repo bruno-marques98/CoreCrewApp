@@ -1,0 +1,39 @@
+﻿@model IEnumerable<CoreCrewApp.Models.Notification>
+
+@{
+    ViewData["Title"] = "Notifications";
+}
+
+<h1>Notifications</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Employee</th>
+            <th>Title</th>
+            <th>Message</th>
+            <th>Is Read</th>
+            <th>Timestamp</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Employee?.FirstName @item.Employee?.LastName</td>
+                <td>@item.Title</td>
+                <td>@item.Message.Substring(0, Math.Min(item.Message.Length, 50))...</td>
+                <td>@item.IsRead</td>
+                <td>@item.Timestamp.ToString("g")</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.NotificationID">Details</a> |
+                    <a asp-action="Edit" asp-route-id="@item.NotificationID">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@item.NotificationID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Create" class="btn btn-primary">Create New Notification</a>

@@ -1,0 +1,39 @@
+﻿@model IEnumerable<CoreCrewApp.Models.Project>
+
+@{
+    ViewData["Title"] = "Projects";
+}
+
+<h1>Projects</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Project Name</th>
+            <th>Description</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Manager</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ProjectName</td>
+                <td>@item.Description?.Substring(0, Math.Min(item.Description.Length, 50))...</td>
+                <td>@item.StartDate.ToString("d")</td>
+                <td>@(item.EndDate.HasValue ? item.EndDate.Value.ToString("d") : "Ongoing")</td>
+                <td>@item.Manager?.FirstName @item.Manager?.LastName</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.ProjectID">Details</a> |
+                    <a asp-action="Edit" asp-route-id="@item.ProjectID">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ProjectID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Create" class="btn btn-primary">Add New Project</a>

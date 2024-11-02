@@ -1,0 +1,33 @@
+﻿@model CoreCrewApp.Models.Salary
+
+@{
+    ViewData["Title"] = "Delete Salary";
+}
+
+<h1>Delete Salary</h1>
+
+<h3>Are you sure you want to delete this salary?</h3>
+
+<div>
+    <h4>Salary</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">Employee ID</dt>
+        <dd class="col-sm-10">@Model.EmployeeID</dd>
+
+        <dt class="col-sm-2">Amount</dt>
+        <dd class="col-sm-10">@Model.Amount</dd>
+
+        <dt class="col-sm-2">Effective Date</dt>
+        <dd class="col-sm-10">@Model.EffectiveDate.ToString("yyyy-MM-dd")</dd>
+
+        <dt class="col-sm-2">End Date</dt>
+        <dd class="col-sm-10">@Model.EndDate?.ToString("yyyy-MM-dd")</dd>
+    </dl>
+</div>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="SalaryID" />
+    <button type="submit" class="btn btn-danger">Delete</button> |
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</form>

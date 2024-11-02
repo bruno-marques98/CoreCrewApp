@@ -1,0 +1,43 @@
+﻿@model CoreCrewApp.Models.Employee
+
+@{
+    ViewData["Title"] = "Employee Details";
+}
+
+<h2>Employee Details</h2>
+
+<div class="form-horizontal">
+    <div class="form-group">
+        <label class="control-label col-md-2">First Name</label>
+        <div class="col-md-10">
+            <p class="form-control-static">@Model.FirstName</p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">Last Name</label>
+        <div class="col-md-10">
+            <p class="form-control-static">@Model.LastName</p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">Email</label>
+        <div class="col-md-10">
+            <p class="form-control-static">@Model.Email</p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">Hire Date</label>
+        <div class="col-md-10">
+            <p class="form-control-static">@Model.HireDate.ToString("yyyy-MM-dd")</p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">Department</label>
+        <div class="col-md-10">
+            <p class="form-control-static">@Model.Department?.DepartmentName</p>
+        </div>
+    </div>
+</div>
+
+<a href="@Url.Action("Edit", "Employee", new { id = Model.EmployeeID })" class="btn btn-primary">Edit</a> |
+<a href="@Url.Action("Index", "Employee")" class="btn btn-secondary">Back to List</a>

@@ -1,0 +1,54 @@
+﻿@model CoreCrewApp.Models.AuditLog
+
+@{
+    ViewData["Title"] = "Audit Log Details";
+}
+
+<h2>Audit Log Details</h2>
+
+<div class="form-horizontal">
+    <div class="form-group">
+        <label class="control-label col-md-2">Action</label>
+        <div class="col-md-10">
+            <p class="form-control-static">@Model.Action</p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Table Name</label>
+        <div class="col-md-10">
+            <p class="form-control-static">@Model.TableName</p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Record ID</label>
+        <div class="col-md-10">
+            <p class="form-control-static">@Model.RecordID</p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">User Name</label>
+        <div class="col-md-10">
+            <p class="form-control-static">@Model.UserName</p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Timestamp</label>
+        <div class="col-md-10">
+            <p class="form-control-static">@Model.Timestamp.ToString("g")</p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Details</label>
+        <div class="col-md-10">
+            <p class="form-control-static">@Model.Details</p>
+        </div>
+    </div>
+</div>
+
+<a href="@Url.Action("Edit", "AuditLog", new { id = Model.AuditLogID })" class="btn btn-primary">Edit</a> |
+<a href="@Url.Action("Index", "AuditLog")" class="btn btn-secondary">Back to List</a>

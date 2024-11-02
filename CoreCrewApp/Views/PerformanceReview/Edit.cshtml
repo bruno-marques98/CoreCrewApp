@@ -1,0 +1,29 @@
+﻿@model CoreCrewApp.Models.PerformanceReview
+
+@{
+    ViewData["Title"] = "Edit Performance Review";
+}
+
+<h1>Edit Performance Review</h1>
+
+<form asp-action="Edit">
+    <input type="hidden" asp-for="PerformanceReviewID" />
+    <div class="form-group">
+        <label asp-for="EmployeeID" class="control-label">Employee</label>
+        <select asp-for="EmployeeID" asp-items="ViewBag.EmployeeList" class="form-control"></select>
+    </div>
+    <div class="form-group">
+        <label asp-for="ReviewDate" class="control-label"></label>
+        <input asp-for="ReviewDate" class="form-control" type="date" />
+    </div>
+    <div class="form-group">
+        <label asp-for="ReviewComments" class="control-label"></label>
+        <textarea asp-for="ReviewComments" class="form-control"></textarea>
+    </div>
+    <div class="form-group">
+        <label asp-for="Rating" class="control-label"></label>
+        <input asp-for="Rating" class="form-control" type="number" min="1" max="5" />
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button> |
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</form>

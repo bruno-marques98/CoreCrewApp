@@ -1,0 +1,35 @@
+﻿@model IEnumerable<CoreCrewApp.Models.TrainingProgram>
+
+<h2>Training Programs</h2>
+<p>
+    <a asp-action="Create">Add New Training Program</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Program Name</th>
+            <th>Description</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Trainer</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ProgramName</td>
+                <td>@item.Description</td>
+                <td>@item.StartDate.ToShortDateString()</td>
+                <td>@item.EndDate?.ToShortDateString() ?? "Ongoing"</td>
+                <td>@item.Trainer?.FirstName</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.TrainingProgramID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.TrainingProgramID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.TrainingProgramID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,32 @@
+﻿@model CoreCrewApp.Models.Salary
+
+@{
+    ViewData["Title"] = "Create Salary";
+}
+
+<h1>Create Salary</h1>
+
+<form asp-action="Create">
+    <div class="form-group">
+        <label asp-for="EmployeeID" class="control-label"></label>
+        <input asp-for="EmployeeID" class="form-control" />
+        <span asp-validation-for="EmployeeID" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Amount" class="control-label"></label>
+        <input asp-for="Amount" class="form-control" />
+        <span asp-validation-for="Amount" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="EffectiveDate" class="control-label"></label>
+        <input asp-for="EffectiveDate" class="form-control" type="date" />
+        <span asp-validation-for="EffectiveDate" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="EndDate" class="control-label"></label>
+        <input asp-for="EndDate" class="form-control" type="date" />
+        <span asp-validation-for="EndDate" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button> |
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</form>

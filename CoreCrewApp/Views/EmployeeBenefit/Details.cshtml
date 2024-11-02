@@ -1,0 +1,31 @@
+﻿@model CoreCrewApp.Models.EmployeeBenefit
+
+@{
+    ViewData["Title"] = "Employee Benefit Details";
+}
+
+<h2>Employee Benefit Details</h2>
+
+<div class="form-horizontal">
+    <div class="form-group">
+        <label class="control-label col-md-2">Employee</label>
+        <div class="col-md-10">
+            <p class="form-control-static">@Model.Employee?.FirstName @Model.Employee?.LastName</p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">Benefit</label>
+        <div class="col-md-10">
+            <p class="form-control-static">@Model.Benefit?.Name</p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">Enrollment Date</label>
+        <div class="col-md-10">
+            <p class="form-control-static">@Model.EnrollmentDate.ToString("yyyy-MM-dd")</p>
+        </div>
+    </div>
+</div>
+
+<a href="@Url.Action("Edit", "EmployeeBenefit", new { employeeId = Model.EmployeeID, benefitId = Model.BenefitID })" class="btn btn-primary">Edit</a> |
+<a href="@Url.Action("Index", "EmployeeBenefit")" class="btn btn-secondary">Back to List</a>

@@ -1,0 +1,31 @@
+﻿@model CoreCrewApp.Models.EmployeeProject
+
+@{
+    ViewData["Title"] = "Employee Project Details";
+}
+
+<h2>Employee Project Details</h2>
+
+<div class="form-horizontal">
+    <div class="form-group">
+        <label class="control-label col-md-2">Employee</label>
+        <div class="col-md-10">
+            <p class="form-control-static">@Model.Employee?.FirstName @Model.Employee?.LastName</p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">Project</label>
+        <div class="col-md-10">
+            <p class="form-control-static">@Model.Project?.ProjectName</p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">Assignment Date</label>
+        <div class="col-md-10">
+            <p class="form-control-static">@Model.AssignmentDate.ToString("yyyy-MM-dd")</p>
+        </div>
+    </div>
+</div>
+
+<a href="@Url.Action("Edit", "EmployeeProject", new { id = Model.EmployeeProjectID })" class="btn btn-primary">Edit</a> |
+<a href="@Url.Action("Index", "EmployeeProject")" class="btn btn-secondary">Back to List</a>

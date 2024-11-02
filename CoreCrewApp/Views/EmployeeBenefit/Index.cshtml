@@ -1,0 +1,35 @@
+﻿@model IEnumerable<CoreCrewApp.Models.EmployeeBenefit>
+
+@{
+    ViewData["Title"] = "Employee Benefits";
+}
+
+<h2>Employee Benefits</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Employee</th>
+            <th>Benefit</th>
+            <th>Enrollment Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Employee?.FirstName @item.Employee?.LastName</td>
+                <td>@item.Benefit?.Name</td>
+                <td>@item.EnrollmentDate.ToString("yyyy-MM-dd")</td>
+                <td>
+                    <a href="@Url.Action("Details", "EmployeeBenefit", new { employeeId = item.EmployeeID, benefitId = item.BenefitID })" class="btn btn-info">Details</a> |
+                    <a href="@Url.Action("Edit", "EmployeeBenefit", new { employeeId = item.EmployeeID, benefitId = item.BenefitID })" class="btn btn-primary">Edit</a> |
+                    <a href="@Url.Action("Delete", "EmployeeBenefit", new { employeeId = item.EmployeeID, benefitId = item.BenefitID })" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a href="@Url.Action("Create", "EmployeeBenefit")" class="btn btn-success">Assign New Benefit</a>

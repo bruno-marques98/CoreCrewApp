@@ -1,0 +1,35 @@
+﻿@model IEnumerable<CoreCrewApp.Models.Benefit>
+
+@{
+    ViewData["Title"] = "Benefits";
+}
+
+<h2>Benefits</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Cost</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Description</td>
+                <td>@item.Cost.ToString("C")</td>
+                <td>
+                    <a href="@Url.Action("Details", "Benefit", new { id = item.BenefitID })" class="btn btn-info">Details</a> |
+                    <a href="@Url.Action("Edit", "Benefit", new { id = item.BenefitID })" class="btn btn-primary">Edit</a> |
+                    <a href="@Url.Action("Delete", "Benefit", new { id = item.BenefitID })" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a href="@Url.Action("Create", "Benefit")" class="btn btn-success">Create New Benefit</a>

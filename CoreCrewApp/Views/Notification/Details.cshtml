@@ -1,0 +1,31 @@
+﻿@model CoreCrewApp.Models.Notification
+
+@{
+    ViewData["Title"] = "Notification Details";
+}
+
+<h1>Notification Details</h1>
+
+<div>
+    <h4>Notification</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">Employee</dt>
+        <dd class="col-sm-10">@Model.Employee?.FirstName @Model.Employee?.LastName</dd>
+
+        <dt class="col-sm-2">Title</dt>
+        <dd class="col-sm-10">@Model.Title</dd>
+
+        <dt class="col-sm-2">Message</dt>
+        <dd class="col-sm-10">@Model.Message</dd>
+
+        <dt class="col-sm-2">Is Read</dt>
+        <dd class="col-sm-10">@Model.IsRead</dd>
+
+        <dt class="col-sm-2">Timestamp</dt>
+        <dd class="col-sm-10">@Model.Timestamp.ToString("g")</dd>
+    </dl>
+</div>
+
+<a asp-action="Edit" asp-route-id="@Model.NotificationID" class="btn btn-primary">Edit</a> |
+<a asp-action="Index" class="btn btn-secondary">Back to List</a>

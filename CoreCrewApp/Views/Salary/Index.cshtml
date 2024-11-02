@@ -1,0 +1,37 @@
+﻿@model IEnumerable<CoreCrewApp.Models.Salary>
+
+@{
+    ViewData["Title"] = "Salaries";
+}
+
+<h1>Salaries</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Employee ID</th>
+            <th>Amount</th>
+            <th>Effective Date</th>
+            <th>End Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var salary in Model)
+        {
+            <tr>
+                <td>@salary.EmployeeID</td>
+                <td>@salary.Amount</td>
+                <td>@salary.EffectiveDate.ToString("yyyy-MM-dd")</td>
+                <td>@salary.EndDate?.ToString("yyyy-MM-dd")</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@salary.SalaryID">Details</a> |
+                    <a asp-action="Edit" asp-route-id="@salary.SalaryID">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@salary.SalaryID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Create" class="btn btn-primary">Add New Salary</a>

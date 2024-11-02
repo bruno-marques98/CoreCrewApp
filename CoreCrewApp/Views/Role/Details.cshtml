@@ -1,0 +1,19 @@
+﻿@model CoreCrewApp.Models.Role
+
+@{
+    ViewData["Title"] = "Role Details";
+}
+
+<h1>Role Details</h1>
+
+<div>
+    <h4>Role</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">Role Name</dt>
+        <dd class="col-sm-10">@Model.RoleName</dd>
+    </dl>
+</div>
+
+<a asp-action="Edit" asp-route-id="@Model.RoleID" class="btn btn-primary">Edit</a> |
+<a asp-action="Index" class="btn btn-secondary">Back to List</a>

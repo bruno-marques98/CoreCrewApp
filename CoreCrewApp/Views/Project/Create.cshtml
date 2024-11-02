@@ -1,0 +1,34 @@
+﻿@model CoreCrewApp.Models.Project
+
+@{
+    ViewData["Title"] = "Create Project";
+}
+
+<h1>Create Project</h1>
+
+<form asp-action="Create">
+    <div class="form-group">
+        <label asp-for="ProjectName" class="control-label"></label>
+        <input asp-for="ProjectName" class="form-control" />
+        <span asp-validation-for="ProjectName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Description" class="control-label"></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+    </div>
+    <div class="form-group">
+        <label asp-for="StartDate" class="control-label"></label>
+        <input asp-for="StartDate" class="form-control" type="date" />
+    </div>
+    <div class="form-group">
+        <label asp-for="EndDate" class="control-label"></label>
+        <input asp-for="EndDate" class="form-control" type="date" />
+    </div>
+    <div class="form-group">
+        <label asp-for="ManagerID" class="control-label">Manager</label>
+        <select asp-for="ManagerID" asp-items="ViewBag.ManagerList" class="form-control"></select>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button> |
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</form>
+

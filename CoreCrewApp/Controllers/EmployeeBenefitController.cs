@@ -1,4 +1,5 @@
-﻿using CoreCrewApp.Models;
+﻿using CoreCrewApp.Data;
+using CoreCrewApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -7,9 +8,9 @@ namespace CoreCrewApp.Controllers
 {
     public class EmployeeBenefitController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly AppDbContext _context;
 
-        public EmployeeBenefitController(ApplicationDbContext context)
+        public EmployeeBenefitController(AppDbContext context)
         {
             _context = context;
         }

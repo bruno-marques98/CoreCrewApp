@@ -1,0 +1,35 @@
+﻿@model CoreCrewApp.Models.EmployeeBenefit
+
+@{
+    ViewData["Title"] = "Delete Employee Benefit";
+}
+
+<h2>Delete Employee Benefit</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+
+<div>
+    <h4>Employee Benefit</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">Employee</dt>
+        <dd class="col-sm-10">
+            @Model.Employee?.FirstName @Model.Employee?.LastName
+        </dd>
+        <dt class="col-sm-2">Benefit</dt>
+        <dd class="col-sm-10">
+            @Model.Benefit?.Name
+        </dd>
+        <dt class="col-sm-2">Enrollment Date</dt>
+        <dd class="col-sm-10">
+            @Model.EnrollmentDate.ToString("yyyy-MM-dd")
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="EmployeeID" />
+        <input type="hidden" asp-for="BenefitID" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a href="@Url.Action("Index", "EmployeeBenefit")" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

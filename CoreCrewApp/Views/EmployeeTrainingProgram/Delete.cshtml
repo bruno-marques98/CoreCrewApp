@@ -1,0 +1,21 @@
+﻿@model CoreCrewApp.Models.EmployeeTrainingProgram
+
+@{
+    ViewData["Title"] = "Delete Training Program Assignment";
+}
+
+<h2>Delete Training Program Assignment</h2>
+
+<h3>Are you sure you want to delete this training program assignment?</h3>
+
+<div>
+    <h4>Employee: @Model.Employee.FirstName @Model.Employee.LastName</h4>
+    <h4>Training Program: @Model.TrainingProgram.ProgramName</h4>
+    <h4>Enrollment Date: @Model.EnrollmentDate.ToShortDateString()</h4>
+</div>
+
+<form asp-action="DeleteConfirmed">
+    <input type="hidden" asp-for="EmployeeTrainingProgramID" />
+    <input type="submit" value="Delete" class="btn btn-danger" />
+    <a href="@Url.Action("Index")" class="btn btn-secondary">Cancel</a>
+</form>

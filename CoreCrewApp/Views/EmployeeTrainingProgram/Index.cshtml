@@ -1,0 +1,35 @@
+﻿@model IEnumerable<CoreCrewApp.Models.EmployeeTrainingProgram>
+
+@{
+    ViewData["Title"] = "Employee Training Programs";
+}
+
+<h2>Employee Training Programs</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Employee</th>
+            <th>Training Program</th>
+            <th>Enrollment Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Employee.FirstName @item.Employee.LastName</td>
+                <td>@item.TrainingProgram.ProgramName</td>
+                <td>@item.EnrollmentDate.ToShortDateString()</td>
+                <td>
+                    <a href="@Url.Action("Details", new { id = item.EmployeeTrainingProgramID })" class="btn btn-info">Details</a> |
+                    <a href="@Url.Action("Edit", new { id = item.EmployeeTrainingProgramID })" class="btn btn-primary">Edit</a> |
+                    <a href="@Url.Action("Delete", new { id = item.EmployeeTrainingProgramID })" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a href="@Url.Action("Create")" class="btn btn-success">Add New Employee Training Program</a>

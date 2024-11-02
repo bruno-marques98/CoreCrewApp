@@ -1,0 +1,28 @@
+﻿@model CoreCrewApp.Models.PerformanceReview
+
+@{
+    ViewData["Title"] = "Performance Review Details";
+}
+
+<h1>Performance Review Details</h1>
+
+<div>
+    <h4>Performance Review</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">Employee</dt>
+        <dd class="col-sm-10">@Model.Employee?.FirstName @Model.Employee?.LastName</dd>
+
+        <dt class="col-sm-2">Review Date</dt>
+        <dd class="col-sm-10">@Model.ReviewDate.ToString("d")</dd>
+
+        <dt class="col-sm-2">Review Comments</dt>
+        <dd class="col-sm-10">@Model.ReviewComments</dd>
+
+        <dt class="col-sm-2">Rating</dt>
+        <dd class="col-sm-10">@Model.Rating</dd>
+    </dl>
+</div>
+
+<a asp-action="Edit" asp-route-id="@Model.PerformanceReviewID" class="btn btn-primary">Edit</a> |
+<a asp-action="Index" class="btn btn-secondary">Back to List</a>

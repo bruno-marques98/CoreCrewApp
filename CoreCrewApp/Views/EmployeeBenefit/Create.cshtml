@@ -1,0 +1,30 @@
+﻿@model CoreCrewApp.Models.EmployeeBenefit
+
+@{
+    ViewData["Title"] = "Assign Employee Benefit";
+}
+
+<h2>Assign Employee Benefit</h2>
+
+<form asp-action="Create">
+    <div class="form-group">
+        <label asp-for="EmployeeID" class="control-label">Employee</label>
+        <select asp-for="EmployeeID" class="form-control" asp-items="ViewBag.Employees"></select>
+        <span asp-validation-for="EmployeeID" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="BenefitID" class="control-label">Benefit</label>
+        <select asp-for="BenefitID" class="form-control" asp-items="ViewBag.Benefits"></select>
+        <span asp-validation-for="BenefitID" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="EnrollmentDate" class="control-label">Enrollment Date</label>
+        <input asp-for="EnrollmentDate" class="form-control" />
+        <span asp-validation-for="EnrollmentDate" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Assign" class="btn btn-success" />
+    </div>
+</form>
+
+<a href="@Url.Action("Index", "EmployeeBenefit")" class="btn btn-secondary">Back to List</a>

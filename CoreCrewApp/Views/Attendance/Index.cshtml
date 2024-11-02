@@ -1,0 +1,39 @@
+﻿@model IEnumerable<CoreCrewApp.Models.Attendance>
+
+@{
+    ViewData["Title"] = "Attendance List";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Employee Name</th>
+            <th>Attendance Status</th>
+            <th>Check-In Time</th>
+            <th>Check-Out Time</th>
+            <th>Created At</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Employee.FirstName @item.Employee.LastName</td>
+                <td>@item.AttendanceStatus</td>
+                <td>@item.CheckInTime.ToString("g")</td>
+                <td>@item.CheckOutTime.ToString("g")</td>
+                <td>@item.CreatedAt.ToString("g")</td>
+                <td>
+                    <a href="@Url.Action("Details", "Attendance", new { id = item.AttendanceId })" class="btn btn-info">Details</a> |
+                    <a href="@Url.Action("Edit", "Attendance", new { id = item.AttendanceId })" class="btn btn-primary">Edit</a> |
+                    <a href="@Url.Action("Delete", "Attendance", new { id = item.AttendanceId })" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a href="@Url.Action("Create", "Attendance")" class="btn btn-success">Create New Attendance Record</a>

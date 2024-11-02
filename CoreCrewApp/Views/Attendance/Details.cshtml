@@ -1,0 +1,54 @@
+﻿@model CoreCrewApp.Models.Attendance
+
+@{
+    ViewData["Title"] = "Attendance Details";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="form-horizontal">
+    <div class="form-group">
+        <label class="control-label col-md-2">Employee:</label>
+        <div class="col-md-10">
+            <p class="form-control-static">@Model.Employee.FirstName @Model.Employee.LastName</p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Attendance Status:</label>
+        <div class="col-md-10">
+            <p class="form-control-static">@Model.AttendanceStatus</p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Check-In Time:</label>
+        <div class="col-md-10">
+            <p class="form-control-static">@Model.CheckInTime.ToString("g")</p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Check-Out Time:</label>
+        <div class="col-md-10">
+            <p class="form-control-static">@Model.CheckOutTime.ToString("g")</p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Created At:</label>
+        <div class="col-md-10">
+            <p class="form-control-static">@Model.CreatedAt.ToString("g")</p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Updated At:</label>
+        <div class="col-md-10">
+            <p class="form-control-static">@Model.UpdatedAt.ToString("g")</p>
+        </div>
+    </div>
+</div>
+
+<a href="@Url.Action("Edit", "Attendance", new { id = Model.AttendanceId })" class="btn btn-primary">Edit</a> |
+<a href="@Url.Action("Index", "Attendance")" class="btn btn-secondary">Back to List</a>

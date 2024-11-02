@@ -1,0 +1,36 @@
+﻿@model CoreCrewApp.Models.EmployeeTraining
+
+@{
+    ViewData["Title"] = "Edit Training Assignment";
+}
+
+<h2>Edit Training Assignment</h2>
+
+<form asp-action="Edit">
+    <input type="hidden" asp-for="EmployeeID" />
+    <input type="hidden" asp-for="TrainingProgramID" />
+
+    <div class="form-group">
+        <label class="control-label">Employee</label>
+        <p class="form-control-static">@Model.Employee.FirstName @Model.Employee.LastName</p>
+    </div>
+    <div class="form-group">
+        <label class="control-label">Training Program</label>
+        <p class="form-control-static">@Model.TrainingProgram.ProgramName</p>
+    </div>
+    <div class="form-group">
+        <label asp-for="EnrollmentDate" class="control-label"></label>
+        <input asp-for="EnrollmentDate" class="form-control" />
+        <span asp-validation-for="EnrollmentDate" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="CompletionDate" class="control-label"></label>
+        <input asp-for="CompletionDate" class="form-control" />
+        <span asp-validation-for="CompletionDate" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Save Changes" class="btn btn-primary" />
+    </div>
+</form>
+
+<a href="@Url.Action("Index")" class="btn btn-secondary">Back to List</a>

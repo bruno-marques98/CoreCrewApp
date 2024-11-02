@@ -1,0 +1,35 @@
+﻿@model CoreCrewApp.Models.EmployeeTraining
+
+@{
+    ViewData["Title"] = "Assign Training Program to Employee";
+}
+
+<h2>Assign Training Program to Employee</h2>
+
+<form asp-action="Create">
+    <div class="form-group">
+        <label asp-for="EmployeeID" class="control-label">Employee</label>
+        <select asp-for="EmployeeID" class="form-control" asp-items="ViewBag.EmployeeID"></select>
+        <span asp-validation-for="EmployeeID" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="TrainingProgramID" class="control-label">Training Program</label>
+        <select asp-for="TrainingProgramID" class="form-control" asp-items="ViewBag.TrainingProgramID"></select>
+        <span asp-validation-for="TrainingProgramID" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="EnrollmentDate" class="control-label"></label>
+        <input asp-for="EnrollmentDate" class="form-control" />
+        <span asp-validation-for="EnrollmentDate" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="CompletionDate" class="control-label"></label>
+        <input asp-for="CompletionDate" class="form-control" />
+        <span asp-validation-for="CompletionDate" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Assign" class="btn btn-success" />
+    </div>
+</form>
+
+<a href="@Url.Action("Index")" class="btn btn-secondary">Back to List</a>

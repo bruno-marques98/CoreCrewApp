@@ -1,0 +1,33 @@
+﻿@model IEnumerable<CoreCrewApp.Models.EmployeeRole>
+
+@{
+    ViewData["Title"] = "Employee Roles";
+}
+
+<h2>Employee Roles</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Employee</th>
+            <th>Role</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Employee?.FirstName @item.Employee?.LastName</td>
+                <td>@item.Role?.RoleName</td>
+                <td>
+                    <a href="@Url.Action("Details", "EmployeeRole", new { employeeId = item.EmployeeID, roleId = item.RoleID })" class="btn btn-info">Details</a> |
+                    <a href="@Url.Action("Edit", "EmployeeRole", new { employeeId = item.EmployeeID, roleId = item.RoleID })" class="btn btn-primary">Edit</a> |
+                    <a href="@Url.Action("Delete", "EmployeeRole", new { employeeId = item.EmployeeID, roleId = item.RoleID })" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a href="@Url.Action("Create", "EmployeeRole")" class="btn btn-success">Assign Role to Employee</a>

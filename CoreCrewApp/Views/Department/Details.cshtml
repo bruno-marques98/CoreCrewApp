@@ -1,0 +1,19 @@
+﻿@model CoreCrewApp.Models.Department
+
+@{
+    ViewData["Title"] = "Department Details";
+}
+
+<h2>Department Details</h2>
+
+<div class="form-horizontal">
+    <div class="form-group">
+        <label class="control-label col-md-2">Department Name</label>
+        <div class="col-md-10">
+            <p class="form-control-static">@Model.DepartmentName</p>
+        </div>
+    </div>
+</div>
+
+<a href="@Url.Action("Edit", "Department", new { id = Model.DepartmentId })" class="btn btn-primary">Edit</a> |
+<a href="@Url.Action("Index", "Department")" class="btn btn-secondary">Back to List</a>

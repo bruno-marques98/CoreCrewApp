@@ -1,0 +1,23 @@
+﻿@model CoreCrewApp.Models.EmployeeTrainingProgram
+
+@{
+    ViewData["Title"] = "Training Program Assignment Details";
+}
+
+<h2>Training Program Assignment Details</h2>
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">Employee</dt>
+        <dd class="col-sm-10">@Model.Employee.FirstName @Model.Employee.LastName</dd>
+
+        <dt class="col-sm-2">Training Program</dt>
+        <dd class="col-sm-10">@Model.TrainingProgram.ProgramName</dd>
+
+        <dt class="col-sm-2">Enrollment Date</dt>
+        <dd class="col-sm-10">@Model.EnrollmentDate.ToShortDateString()</dd>
+    </dl>
+</div>
+
+<a href="@Url.Action("Edit", new { id = Model.EmployeeTrainingProgramID })" class="btn btn-primary">Edit</a> |
+<a href="@Url.Action("Index")" class="btn btn-secondary">Back to List</a>

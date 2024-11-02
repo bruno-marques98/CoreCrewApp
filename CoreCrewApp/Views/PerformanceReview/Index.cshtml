@@ -1,0 +1,37 @@
+﻿@model IEnumerable<CoreCrewApp.Models.PerformanceReview>
+
+@{
+    ViewData["Title"] = "Performance Reviews";
+}
+
+<h1>Performance Reviews</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Employee</th>
+            <th>Review Date</th>
+            <th>Comments</th>
+            <th>Rating</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Employee?.FirstName @item.Employee?.LastName</td>
+                <td>@item.ReviewDate.ToString("d")</td>
+                <td>@item.ReviewComments.Substring(0, Math.Min(item.ReviewComments.Length, 50))...</td>
+                <td>@item.Rating</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.PerformanceReviewID">Details</a> |
+                    <a asp-action="Edit" asp-route-id="@item.PerformanceReviewID">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@item.PerformanceReviewID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Create" class="btn btn-primary">Add New Review</a>

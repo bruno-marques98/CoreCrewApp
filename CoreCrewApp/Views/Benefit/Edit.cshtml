@@ -1,0 +1,31 @@
+﻿@model CoreCrewApp.Models.Benefit
+
+@{
+    ViewData["Title"] = "Edit Benefit";
+}
+
+<h2>Edit Benefit</h2>
+
+<form asp-action="Edit">
+    <input type="hidden" asp-for="BenefitID" />
+    <div class="form-group">
+        <label asp-for="Name" class="control-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Description" class="control-label"></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Cost" class="control-label"></label>
+        <input asp-for="Cost" class="form-control" type="number" step="0.01" />
+        <span asp-validation-for="Cost" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Save Changes" class="btn btn-primary" />
+    </div>
+</form>
+
+<a href="@Url.Action("Index", "Benefit")" class="btn btn-secondary">Back to List</a>

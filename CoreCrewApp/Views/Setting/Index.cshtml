@@ -1,0 +1,33 @@
+﻿@model IEnumerable<CoreCrewApp.Models.Setting>
+
+<h2>Settings</h2>
+<p>
+    <a asp-action="Create">Add New Setting</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Value</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Value</td>
+                <td>@item.Type</td>
+                <td>@item.Description</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.SettingID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.SettingID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.SettingID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

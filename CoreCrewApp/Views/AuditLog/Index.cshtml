@@ -1,0 +1,40 @@
+﻿@model IEnumerable<CoreCrewApp.Models.AuditLog>
+
+@{
+    ViewData["Title"] = "Audit Logs";
+}
+
+<h2>Audit Logs</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Action</th>
+            <th>Table Name</th>
+            <th>Record ID</th>
+            <th>User Name</th>
+            <th>Timestamp</th>
+            <th>Details</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Action</td>
+                <td>@item.TableName</td>
+                <td>@item.RecordID</td>
+                <td>@item.UserName</td>
+                <td>@item.Timestamp.ToString("g")</td>
+                <td>@item.Details</td>
+                <td>
+                    <a href="@Url.Action("Details", "AuditLog", new { id = item.AuditLogID })" class="btn btn-info">Details</a> |
+                    <a href="@Url.Action("Delete", "AuditLog", new { id = item.AuditLogID })" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a href="@Url.Action("Create", "AuditLog")" class="btn btn-success">Create New Audit Log</a>
