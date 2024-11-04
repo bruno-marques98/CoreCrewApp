@@ -15,11 +15,17 @@ namespace CoreCrewApp.Tests.Controllers
         private (AttendanceController Controller, AppDbContext Context) CreateController()
         {
             var options = new DbContextOptionsBuilder<AppDbContext>()
-                .UseInMemoryDatabase("TestDatabase") // Fixed name to persist across test methods
+                .UseInMemoryDatabase($"TestDatabase_{Guid.NewGuid()}") // Unique database for each test
                 .Options;
 
             var context = new AppDbContext(options);
             var controller = new AttendanceController(context);
+
+            // Clear all entries in the Attendances and Employees tables at the beginning of each test
+            context.Attendances.RemoveRange(context.Attendances);
+            context.Employees.RemoveRange(context.Employees);
+            context.SaveChanges();
+
             return (controller, context);
         }
 
@@ -35,8 +41,8 @@ namespace CoreCrewApp.Tests.Controllers
 
             var attendances = new List<Attendance>
             {
-                new Attendance { AttendanceId = 1, Employee = employee, AttendanceStatus = AttendanceStatus.Present,CheckInTime = new DateTime(2024, 10, 10,10,0,0),CheckOutTime = new DateTime(2024, 10, 10,11,0,0),CreatedAt=DateTime.Now,UpdatedAt=DateTime.Now },
-                new Attendance { AttendanceId = 2, Employee = employee, AttendanceStatus = AttendanceStatus.Absent,CheckInTime = new DateTime(2024, 10, 11,10,0,0),CheckOutTime = new DateTime(2024, 10, 11,11,0,0),CreatedAt=DateTime.Now,UpdatedAt=DateTime.Now  }
+                new Attendance { AttendanceId = 1, Employee = employee, AttendanceStatus = AttendanceStatus.Present, CheckInTime = new DateTime(2024, 10, 10, 10, 0, 0), CheckOutTime = new DateTime(2024, 10, 10, 11, 0, 0), CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now },
+                new Attendance { AttendanceId = 2, Employee = employee, AttendanceStatus = AttendanceStatus.Absent, CheckInTime = new DateTime(2024, 10, 11, 10, 0, 0), CheckOutTime = new DateTime(2024, 10, 11, 11, 0, 0), CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now }
             };
 
             await context.Attendances.AddRangeAsync(attendances);
@@ -50,10 +56,8 @@ namespace CoreCrewApp.Tests.Controllers
             var model = Assert.IsAssignableFrom<List<Attendance>>(viewResult.Model);
 
             // Verify the count of attendances
-            Assert.Equal(2, model.Count); // Should be 2 now
+            Assert.Equal(2, model.Count);
         }
-
-
 
         [Fact]
         public async Task Details_ReturnsNotFound_WhenIdIsNull()
@@ -86,7 +90,7 @@ namespace CoreCrewApp.Tests.Controllers
         {
             // Arrange
             var (controller, context) = CreateController();
-            var attendance = new Attendance { AttendanceId = 3, AttendanceStatus = AttendanceStatus.Present }; // Changed ID to avoid conflicts
+            var attendance = new Attendance { AttendanceId = 3, AttendanceStatus = AttendanceStatus.Present };
 
             // Act
             var result = await controller.Create(attendance);
@@ -118,6 +122,5 @@ namespace CoreCrewApp.Tests.Controllers
             var deletedAttendance = await context.Attendances.FindAsync(attendance.AttendanceId);
             Assert.Null(deletedAttendance); // Assert attendance was deleted
         }
-
     }
 }

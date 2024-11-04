@@ -3,6 +3,11 @@ using CoreCrewApp.Data;
 using CoreCrewApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Xunit;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace CoreCrewApp.Tests.Controllers
 {
@@ -11,11 +16,15 @@ namespace CoreCrewApp.Tests.Controllers
         private (AuditLogController, AppDbContext) CreateController()
         {
             var options = new DbContextOptionsBuilder<AppDbContext>()
-                .UseInMemoryDatabase("TestDatabase")
+                .UseInMemoryDatabase($"TestDatabase_{Guid.NewGuid()}") // Ensures a unique database for each test
                 .Options;
 
             var context = new AppDbContext(options);
             var controller = new AuditLogController(context);
+
+            // Clear all entries in the AuditLogs table at the beginning of each test
+            context.AuditLogs.RemoveRange(context.AuditLogs);
+            context.SaveChanges();
 
             return (controller, context);
         }
@@ -26,10 +35,10 @@ namespace CoreCrewApp.Tests.Controllers
             // Arrange
             var (controller, context) = CreateController();
             var auditLogs = new List<AuditLog>
-        {
-            new AuditLog { AuditLogID = 1, Action = "Create", TableName = "Users", UserName = "Admin", Timestamp = DateTime.Now, Details = "Created user" },
-            new AuditLog { AuditLogID = 2, Action = "Delete", TableName = "Orders", UserName = "Admin", Timestamp = DateTime.Now, Details = "Deleted order" }
-        };
+            {
+                new AuditLog { Action = "Create", TableName = "Users", UserName = "Admin", Timestamp = DateTime.Now, Details = "Created user" },
+                new AuditLog { Action = "Delete", TableName = "Orders", UserName = "Admin", Timestamp = DateTime.Now, Details = "Deleted order" }
+            };
             await context.AuditLogs.AddRangeAsync(auditLogs);
             await context.SaveChangesAsync();
 
@@ -47,12 +56,6 @@ namespace CoreCrewApp.Tests.Controllers
         {
             // Arrange
             var (controller, context) = CreateController();
-
-            // Clear existing entries to avoid conflicts
-            context.AuditLogs.RemoveRange(context.AuditLogs);
-            await context.SaveChangesAsync();
-
-            // Add a new audit log entry without setting AuditLogID
             var auditLog = new AuditLog
             {
                 Action = "ViewDetails",
@@ -61,7 +64,6 @@ namespace CoreCrewApp.Tests.Controllers
                 Timestamp = DateTime.Now,
                 Details = "Viewed user details"
             };
-
             await context.AuditLogs.AddAsync(auditLog);
             await context.SaveChangesAsync();
 
@@ -71,9 +73,8 @@ namespace CoreCrewApp.Tests.Controllers
             // Assert
             var viewResult = Assert.IsType<ViewResult>(result);
             var model = Assert.IsType<AuditLog>(viewResult.Model);
-            Assert.Equal(auditLog.AuditLogID, model.AuditLogID); // Check that the correct entry is returned
+            Assert.Equal(auditLog.AuditLogID, model.AuditLogID);
         }
-
 
         [Fact]
         public async Task Details_ReturnsNotFound_WhenIdIsNull()
@@ -93,11 +94,6 @@ namespace CoreCrewApp.Tests.Controllers
         {
             // Arrange
             var (controller, context) = CreateController();
-
-            // Clear the AuditLogs table
-            context.AuditLogs.RemoveRange(context.AuditLogs);
-            await context.SaveChangesAsync();
-
             var auditLog = new AuditLog
             {
                 Action = "Create",
@@ -116,14 +112,13 @@ namespace CoreCrewApp.Tests.Controllers
             Assert.Single(context.AuditLogs); // Check if only one auditLog was added
         }
 
-
         [Fact]
         public async Task Create_Post_ReturnsViewWithModel_WhenModelStateIsInvalid()
         {
             // Arrange
             var (controller, _) = CreateController();
             controller.ModelState.AddModelError("Action", "Required"); // Simulate invalid model state
-            var auditLog = new AuditLog { AuditLogID = 1 };
+            var auditLog = new AuditLog();
 
             // Act
             var result = await controller.Create(auditLog);
@@ -173,12 +168,6 @@ namespace CoreCrewApp.Tests.Controllers
         {
             // Arrange
             var (controller, context) = CreateController();
-
-            // Clear the AuditLogs table to ensure no leftover data
-            context.AuditLogs.RemoveRange(context.AuditLogs);
-            await context.SaveChangesAsync();
-
-            // Add a new audit log entry without setting AuditLogID
             var auditLog = new AuditLog
             {
                 Action = "Delete",
@@ -187,7 +176,6 @@ namespace CoreCrewApp.Tests.Controllers
                 Timestamp = DateTime.Now,
                 Details = "Deleted order"
             };
-
             await context.AuditLogs.AddAsync(auditLog);
             await context.SaveChangesAsync();
 
@@ -199,6 +187,5 @@ namespace CoreCrewApp.Tests.Controllers
             Assert.Equal("Index", redirectResult.ActionName);
             Assert.Empty(context.AuditLogs); // Confirm the audit log was removed
         }
-
     }
 }
