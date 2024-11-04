@@ -12,5 +12,6 @@ namespace CoreCrewApp.Models
         public Employee Employee { get; set; }
         public int RoleID { get; set; }
         public Role Role { get; set; }
+        public DateTime AssignDate { get; set; }
     }
 }
