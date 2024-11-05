@@ -1,10 +1,12 @@
 ﻿using CoreCrewApp.Data;
 using CoreCrewApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace CoreCrewApp.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class SettingController : Controller
     {
         private readonly AppDbContext _context;

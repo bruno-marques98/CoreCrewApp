@@ -17,10 +17,43 @@ namespace CoreCrewApp.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.8")
+                .HasAnnotation("ProductVersion", "8.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("CoreCrewApp.Models.Attendance", b =>
+                {
+                    b.Property<int>("AttendanceId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AttendanceId"));
+
+                    b.Property<int>("AttendanceStatus")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CheckInTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("CheckOutTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("AttendanceId");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.ToTable("Attendances");
+                });
 
             modelBuilder.Entity("CoreCrewApp.Models.AuditLog", b =>
                 {
@@ -67,7 +100,7 @@ namespace CoreCrewApp.Migrations
                             Action = "Created",
                             Details = "Initial setup of the application.",
                             TableName = "Employee",
-                            Timestamp = new DateTime(2024, 9, 3, 14, 43, 20, 967, DateTimeKind.Local).AddTicks(7078),
+                            Timestamp = new DateTime(2024, 11, 5, 11, 20, 47, 931, DateTimeKind.Local).AddTicks(7802),
                             UserName = "Bruno Marquês"
                         },
                         new
@@ -76,7 +109,7 @@ namespace CoreCrewApp.Migrations
                             Action = "Updated",
                             Details = "Updated employee records.",
                             TableName = "Employee",
-                            Timestamp = new DateTime(2024, 9, 3, 14, 43, 20, 967, DateTimeKind.Local).AddTicks(7081),
+                            Timestamp = new DateTime(2024, 11, 5, 11, 20, 47, 931, DateTimeKind.Local).AddTicks(7808),
                             UserName = "Bruno Marquês"
                         });
                 });
@@ -240,13 +273,13 @@ namespace CoreCrewApp.Migrations
                         {
                             EmployeeID = 1,
                             BenefitID = 1,
-                            EnrollmentDate = new DateTime(2024, 9, 3, 14, 43, 20, 967, DateTimeKind.Local).AddTicks(6947)
+                            EnrollmentDate = new DateTime(2024, 11, 5, 11, 20, 47, 931, DateTimeKind.Local).AddTicks(7568)
                         },
                         new
                         {
                             EmployeeID = 2,
                             BenefitID = 2,
-                            EnrollmentDate = new DateTime(2024, 9, 3, 14, 43, 20, 967, DateTimeKind.Local).AddTicks(6994)
+                            EnrollmentDate = new DateTime(2024, 11, 5, 11, 20, 47, 931, DateTimeKind.Local).AddTicks(7626)
                         });
                 });
 
@@ -295,6 +328,9 @@ namespace CoreCrewApp.Migrations
                     b.Property<int>("RoleID")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("AssignDate")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("EmployeeID", "RoleID");
 
                     b.HasIndex("RoleID");
@@ -305,12 +341,14 @@ namespace CoreCrewApp.Migrations
                         new
                         {
                             EmployeeID = 1,
-                            RoleID = 1
+                            RoleID = 1,
+                            AssignDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             EmployeeID = 2,
-                            RoleID = 2
+                            RoleID = 2,
+                            AssignDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -452,7 +490,7 @@ namespace CoreCrewApp.Migrations
                             EmployeeID = 1,
                             IsRead = false,
                             Message = "Welcome to the company!",
-                            Timestamp = new DateTime(2024, 9, 3, 13, 43, 20, 967, DateTimeKind.Utc).AddTicks(7058),
+                            Timestamp = new DateTime(2024, 11, 5, 11, 20, 47, 931, DateTimeKind.Utc).AddTicks(7763),
                             Title = "Welcome"
                         },
                         new
@@ -461,7 +499,7 @@ namespace CoreCrewApp.Migrations
                             EmployeeID = 2,
                             IsRead = false,
                             Message = "Please review your benefits options.",
-                            Timestamp = new DateTime(2024, 9, 3, 13, 43, 20, 967, DateTimeKind.Utc).AddTicks(7059),
+                            Timestamp = new DateTime(2024, 11, 5, 11, 20, 47, 931, DateTimeKind.Utc).AddTicks(7767),
                             Title = "Benefits"
                         });
                 });
@@ -714,6 +752,219 @@ namespace CoreCrewApp.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("LoginProvider")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("CoreCrewApp.Models.Attendance", b =>
+                {
+                    b.HasOne("CoreCrewApp.Models.Employee", "Employee")
+                        .WithMany("Attendances")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+                });
+
             modelBuilder.Entity("CoreCrewApp.Models.Benefit", b =>
                 {
                     b.HasOne("CoreCrewApp.Models.Employee", null)
@@ -893,6 +1144,57 @@ namespace CoreCrewApp.Migrations
                     b.Navigation("Trainer");
                 });
 
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("CoreCrewApp.Models.Benefit", b =>
                 {
                     b.Navigation("EmployeeBenefits");
@@ -905,6 +1207,8 @@ namespace CoreCrewApp.Migrations
 
             modelBuilder.Entity("CoreCrewApp.Models.Employee", b =>
                 {
+                    b.Navigation("Attendances");
+
                     b.Navigation("Benefits");
 
                     b.Navigation("EmployeeBenefits");
