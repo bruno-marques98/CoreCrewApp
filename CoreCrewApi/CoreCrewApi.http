@@ -1,0 +1,6 @@
+@CoreCrewApi_HostAddress = http://localhost:5254
+
+GET {{CoreCrewApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
